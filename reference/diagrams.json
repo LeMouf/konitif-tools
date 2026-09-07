@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "1.0.0",
+  "package": "@konitif/tools",
+  "diagrams": [
+    {
+      "id": "tool-resolution",
+      "title": "De la capacité à l'outil hébergé",
+      "kind": "lifecycle",
+      "summary": "Une capacité portable est définie avant d'être liée à une implémentation et résolue par un hôte.",
+      "nodes": [
+        {
+          "id": "definition",
+          "label": "Définition",
+          "description": "Identité, scope et contributions sont déclarés."
+        },
+        {
+          "id": "binding",
+          "label": "Liaison",
+          "description": "Une implémentation compatible est associée."
+        },
+        {
+          "id": "registry",
+          "label": "Registre",
+          "description": "Le module est admis et indexé."
+        },
+        {
+          "id": "resolution",
+          "label": "Résolution",
+          "description": "L'hôte sélectionne la contribution requise."
+        },
+        {
+          "id": "host",
+          "label": "Hébergement",
+          "description": "La surface monte l'outil sans posséder son domaine.",
+          "tone": "projection"
+        }
+      ],
+      "edges": [
+        {
+          "from": "definition",
+          "to": "binding"
+        },
+        {
+          "from": "binding",
+          "to": "registry"
+        },
+        {
+          "from": "registry",
+          "to": "resolution"
+        },
+        {
+          "from": "resolution",
+          "to": "host"
+        }
+      ],
+      "caption": "Résoudre ou afficher un outil ne transfère pas l'autorité de sa définition."
+    }
+  ]
+}

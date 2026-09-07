@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "1.0.0",
+  "package": "@konitif/tools",
+  "intent": "Déclarer, lier et résoudre des capacités outils indépendamment de leur surface.",
+  "clusters": [
+    {
+      "id": "module-contract",
+      "title": "Contrat de module",
+      "summary": "Définition portable d'un outil et de ses contributions.",
+      "authority": "Déclaration canonique de capacité.",
+      "owns": [
+        "module",
+        "scope",
+        "contributions"
+      ],
+      "doesNotOwn": [
+        "composant UI"
+      ],
+      "workflow": [
+        "Définir",
+        "Qualifier",
+        "Publier"
+      ],
+      "symbolNames": [
+        "defineKonitifToolModule",
+        "DefineKonitifToolModuleInput",
+        "KonitifToolModule",
+        "KonitifToolScope",
+        "KonitifToolContribution",
+        "KonitifToolContributionKind"
+      ]
+    },
+    {
+      "id": "implementation-binding",
+      "title": "Liaison d'implémentation",
+      "summary": "Associer une définition portable à une réalisation.",
+      "authority": "Liaison déclarée.",
+      "owns": [
+        "binding"
+      ],
+      "doesNotOwn": [
+        "définition",
+        "hébergement"
+      ],
+      "workflow": [
+        "Résoudre",
+        "Lier",
+        "Vérifier"
+      ],
+      "symbolNames": [
+        "bindKonitifToolModule",
+        "KonitifToolImplementationBinding"
+      ]
+    },
+    {
+      "id": "registry",
+      "title": "Registre",
+      "summary": "Enregistrer et résoudre les modules disponibles.",
+      "authority": "Catalogue d'admission.",
+      "owns": [
+        "enregistrement",
+        "résolution"
+      ],
+      "doesNotOwn": [
+        "cycle de vie UI"
+      ],
+      "workflow": [
+        "Enregistrer",
+        "Résoudre",
+        "Fournir"
+      ],
+      "symbolNames": [
+        "KonitifToolModuleRegistry"
+      ]
+    }
+  ]
+}
