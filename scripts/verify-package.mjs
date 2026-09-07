@@ -14,7 +14,18 @@ const run = (command, args, cwd = root) => execFileSync(command, args, {
 const manifest = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
 assert.equal(manifest.name, '@konitif/tools');
 assert.deepEqual(manifest.dependencies, { '@konitif/core': '0.284.2' });
-const [packed] = JSON.parse(run('npm', ['pack', '--offline', '--ignore-scripts', '--json', '--pack-destination', temp]));
+// Windows npm is a .cmd shim, not an executable for execFileSync.
+// Run the already-installed CLI through Node, without a shell or download.
+const packArgs = ['pack', '--offline', '--ignore-scripts', '--json', '--pack-destination', temp];
+let packOutput;
+if (process.platform === 'win32') {
+  const npmCli = join(dirname(process.execPath), 'node_modules/npm/bin/npm-cli.js');
+  assert.ok(existsSync(npmCli), `Installed npm CLI required at ${npmCli}; no automatic installation`);
+  packOutput = run(process.execPath, [npmCli, ...packArgs]);
+} else {
+  packOutput = run('npm', packArgs);
+}
+const [packed] = JSON.parse(packOutput);
 const files = packed.files.map(file => file.path);
 for (const file of files) assert.match(file, /^(dist\/|src\/|reference\/|package\.json$|README\.md$|LICENSE\.md$)/);
 for (const file of ['dist/index.js', 'dist/index.d.ts', 'src/index.ts', 'LICENSE.md', 'reference/catalog.json', 'reference/diagrams.json']) assert.ok(files.includes(file), file);
