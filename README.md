@@ -6,6 +6,19 @@ The package owns tool module identity, capability declarations, implementation b
 
 Generic tools accept state through explicit ports and emit intents. Product packages bind those ports to their own authorities.
 
+## Input interpretation
+
+`@konitif/tools/input` supplies data contracts and pure resolvers for associating
+keyboard, controller or soundboard signals with action identifiers. It can be
+used without the module registry, a workspace, a renderer or browser APIs.
+
+`resolveInteractionInputBindings` applies caller-supplied overrides without
+changing action identity. `resolveInteractionInputActions` returns matching
+invocations; it does not execute or authorize their effects. Products own their
+binding catalogs, persistence and action handlers. Hosts own device listeners,
+focus and event cancellation. Press/release, repeat and modifier matching remain
+explicit. The input entry has no runtime imports.
+
 ## Development
 
 With Node.js 22 or newer and npm installed:
