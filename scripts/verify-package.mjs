@@ -28,7 +28,7 @@ if (process.platform === 'win32') {
 const [packed] = JSON.parse(packOutput);
 const files = packed.files.map(file => file.path);
 for (const file of files) assert.match(file, /^(dist\/|src\/|reference\/|package\.json$|README\.md$|LICENSE\.md$)/);
-for (const file of ['dist/index.js', 'dist/index.d.ts', 'src/index.ts', 'LICENSE.md', 'reference/catalog.json', 'reference/diagrams.json']) assert.ok(files.includes(file), file);
+for (const file of ['dist/index.js', 'dist/index.d.ts', 'dist/input.js', 'dist/input.d.ts', 'src/index.ts', 'src/input.ts', 'LICENSE.md', 'reference/catalog.json', 'reference/diagrams.json']) assert.ok(files.includes(file), file);
 const consumer = join(temp, 'consumer');
 const dependency = join(consumer, 'node_modules/@konitif/tools');
 mkdirSync(dependency, { recursive: true });
@@ -61,5 +61,8 @@ run(process.execPath, ['--input-type=module', '-e', `
   assert.equal(calls,0); assert.equal(registry.get(module.id),module);
   assert.throws(()=>registry.register(module),/Duplicate/);
   assert.equal(await binding.loadComponent(),'component'); assert.equal(calls,1);
+  const {resolveInteractionInputActions}=await import('@konitif/tools/input');
+  const signal={source:'keyboard',controlId:'Space',phase:'press'};
+  assert.deepEqual(resolveInteractionInputActions([{id:'play',actionId:'play',source:'keyboard',controlId:'Space',phase:'press'}],signal),[{actionId:'play',bindingId:'play',signal}]);
 `], consumer);
 console.log(JSON.stringify({ consumer: 'passed (ESM and TypeScript)', integrity: packed.integrity, bytes: packed.size, files: files.length, evidence: temp }));
