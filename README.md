@@ -1,39 +1,64 @@
 # @konitif/tools
 
-Public, product-neutral contracts for reusable KONITIF tools.
+Product-neutral tool definitions, capability declarations and explicit
+implementation bindings for KONITIF hosts.
 
-The package owns tool module identity, capability declarations, implementation bindings and module registration. It does not own product profiles, Svelte components, application stores or Maxtronics behavior policy.
-
-Generic tools accept state through explicit ports and emit intents. Product packages bind those ports to their own authorities.
-
-## Input interpretation
-
-`@konitif/tools/input` supplies data contracts and pure resolvers for associating
-keyboard, controller or soundboard signals with action identifiers. It can be
-used without the module registry, a workspace, a renderer or browser APIs.
-
-`resolveInteractionInputBindings` applies caller-supplied overrides without
-changing action identity. `resolveInteractionInputActions` returns matching
-invocations; it does not execute or authorize their effects. Products own their
-binding catalogs, persistence and action handlers. Hosts own device listeners,
-focus and event cancellation. Press/release, repeat and modifier matching remain
-explicit. The input entry has no runtime imports.
-
-## Development
-
-With Node.js 22 or newer and npm installed:
+## Installation
 
 ```sh
-npm ci --ignore-scripts
-npm run build
-npm test
-npm run verify:package
+npm install @konitif/tools
 ```
 
-The package provides ESM JavaScript and TypeScript declarations, and references
-the published Core package rather than its source checkout.
+## What it provides
 
-## Licence
+- Portable tool module identity and capability contracts.
+- Explicit bindings between a definition and its implementation.
+- An instance-scoped module registry.
+- Pure input-binding resolvers for keyboard, controller and soundboard signals.
 
-[PolyForm Noncommercial 1.0.0](LICENSE.md) during v0.x.
-Source-available, not OSI open source. Commercial use requires a separate written licence.
+## Authority boundary
+
+This package owns tool definitions and their explicit bindings. It does not own
+product profiles, UI components, application stores, device listeners or the
+effects of resolved actions. Hosts admit modules and route emitted intents to
+the appropriate product authority.
+
+## Quick start
+
+```ts
+import {
+  KonitifToolModuleRegistry,
+  bindKonitifToolModule,
+  defineKonitifToolModule,
+} from '@konitif/tools';
+
+const module = defineKonitifToolModule({
+  id: 'example.inspector',
+  name: 'Inspector',
+  capability: 'inspection',
+  definition: { kind: 'inspector' },
+});
+const binding = bindKonitifToolModule({
+  module,
+  loadComponent: async () => ({ mount: () => undefined }),
+});
+const registry = new KonitifToolModuleRegistry();
+registry.register(module);
+```
+
+## Public entry points
+
+| Entry | Purpose |
+| --- | --- |
+| `@konitif/tools` | Tool definitions, bindings and registry. |
+| `@konitif/tools/input` | Pure input contracts and action-resolution helpers. |
+
+## Reference
+
+See [`reference/`](reference/) for the machine-readable capability catalog and
+authority diagrams.
+
+## License
+
+Source-available under [PolyForm Noncommercial 1.0.0](LICENSE.md), not OSI open
+source. Commercial use requires separate written authorization.

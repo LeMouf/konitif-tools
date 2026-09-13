@@ -4,34 +4,34 @@
   "diagrams": [
     {
       "id": "tool-resolution",
-      "title": "De la capacité à l'outil hébergé",
+      "title": "From capability to hosted tool",
       "kind": "lifecycle",
-      "summary": "Une capacité portable est définie avant d'être liée à une implémentation et résolue par un hôte.",
+      "summary": "A portable capability is defined before it is bound to an implementation and resolved by a host.",
       "nodes": [
         {
           "id": "definition",
-          "label": "Définition",
-          "description": "Identité, scope et contributions sont déclarés."
+          "label": "Definition",
+          "description": "Identity, scope, and contributions are declared."
         },
         {
           "id": "binding",
-          "label": "Liaison",
-          "description": "Une implémentation compatible est associée."
+          "label": "Binding",
+          "description": "A compatible implementation is associated."
         },
         {
           "id": "registry",
-          "label": "Registre",
-          "description": "Le module est admis et indexé."
+          "label": "Registry",
+          "description": "The module is admitted and indexed."
         },
         {
           "id": "resolution",
-          "label": "Résolution",
-          "description": "L'hôte sélectionne la contribution requise."
+          "label": "Resolution",
+          "description": "The host selects the required contribution."
         },
         {
           "id": "host",
-          "label": "Hébergement",
-          "description": "La surface monte l'outil sans posséder son domaine.",
+          "label": "Hosting",
+          "description": "The surface mounts the tool without owning its domain.",
           "tone": "projection"
         }
       ],
@@ -53,7 +53,7 @@
           "to": "host"
         }
       ],
-      "caption": "Résoudre ou afficher un outil ne transfère pas l'autorité de sa définition."
+      "caption": "Resolving or displaying a tool does not transfer authority over its definition."
     }
   ]
 }

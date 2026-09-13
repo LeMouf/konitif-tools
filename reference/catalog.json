@@ -1,25 +1,25 @@
 {
   "schemaVersion": "1.0.0",
   "package": "@konitif/tools",
-  "intent": "Déclarer, lier et résoudre des capacités outils indépendamment de leur surface.",
+  "intent": "Declare, bind, and resolve tool capabilities independently of their surface.",
   "clusters": [
     {
       "id": "module-contract",
-      "title": "Contrat de module",
-      "summary": "Définition portable d'un outil et de ses contributions.",
-      "authority": "Déclaration canonique de capacité.",
+      "title": "Module contract",
+      "summary": "Portable definition of a tool and its contributions.",
+      "authority": "Canonical capability declaration.",
       "owns": [
         "module",
         "scope",
         "contributions"
       ],
       "doesNotOwn": [
-        "composant UI"
+        "UI component"
       ],
       "workflow": [
-        "Définir",
-        "Qualifier",
-        "Publier"
+        "Define",
+        "Qualify",
+        "Publish"
       ],
       "symbolNames": [
         "defineKonitifToolModule",
@@ -32,20 +32,20 @@
     },
     {
       "id": "implementation-binding",
-      "title": "Liaison d'implémentation",
-      "summary": "Associer une définition portable à une réalisation.",
-      "authority": "Liaison déclarée.",
+      "title": "Implementation binding",
+      "summary": "Associates a portable definition with an implementation.",
+      "authority": "Declared binding.",
       "owns": [
         "binding"
       ],
       "doesNotOwn": [
-        "définition",
-        "hébergement"
+        "definition",
+        "hosting"
       ],
       "workflow": [
-        "Résoudre",
-        "Lier",
-        "Vérifier"
+        "Resolve",
+        "Bind",
+        "Verify"
       ],
       "symbolNames": [
         "bindKonitifToolModule",
@@ -54,20 +54,20 @@
     },
     {
       "id": "registry",
-      "title": "Registre",
-      "summary": "Enregistrer et résoudre les modules disponibles.",
-      "authority": "Catalogue d'admission.",
+      "title": "Registry",
+      "summary": "Registers and resolves available modules.",
+      "authority": "Admission catalog.",
       "owns": [
-        "enregistrement",
-        "résolution"
+        "registration",
+        "resolution"
       ],
       "doesNotOwn": [
-        "cycle de vie UI"
+        "UI lifecycle"
       ],
       "workflow": [
-        "Enregistrer",
-        "Résoudre",
-        "Fournir"
+        "Register",
+        "Resolve",
+        "Provide"
       ],
       "symbolNames": [
         "KonitifToolModuleRegistry"
