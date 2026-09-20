@@ -1,7 +1,7 @@
 # @konitif/tools
 
-Product-neutral tool definitions, capability declarations and explicit
-implementation bindings for KONITIF hosts.
+Portable tool definitions, capability declarations and explicit implementation
+bindings for KONITIF hosts.
 
 ## Installation
 
@@ -19,9 +19,9 @@ npm install @konitif/tools
 ## Authority boundary
 
 This package owns tool definitions and their explicit bindings. It does not own
-product profiles, UI components, application stores, device listeners or the
-effects of resolved actions. Hosts admit modules and route emitted intents to
-the appropriate product authority.
+domain profiles, UI components, host state, device listeners or the effects of
+resolved actions. Hosts admit modules and route emitted intents to the relevant
+domain authority.
 
 ## Quick start
 

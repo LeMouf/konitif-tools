@@ -13,5 +13,5 @@ npm test
 npm run verify:package
 ```
 
-Keep product tools, UI components and device listeners outside this package.
+Keep domain modules, UI components and device listeners outside this package.
 Follow `RELEASE.md` for publication.
