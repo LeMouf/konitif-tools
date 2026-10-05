@@ -4,6 +4,14 @@ import {
   type KonitifToolManifest
 } from '@konitif/core';
 
+export {
+  mountKonitifToolSurface,
+  type KonitifToolSurfaceContext,
+  type KonitifToolSurfaceImplementation,
+  type KonitifToolSurfaceInstance,
+  type KonitifToolSurfaceMountResult
+} from './surface.js';
+
 export type KonitifToolScope = 'generic' | 'product-specialization';
 export type KonitifToolContributionKind = 'command' | 'widget' | 'surface' | 'adapter';
 
