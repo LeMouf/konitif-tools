@@ -4,6 +4,16 @@
   "intent": "Declare, bind, and resolve tool capabilities independently of their surface.",
   "clusters": [
     {
+      "id": "surface-contract",
+      "title": "Portable surface contract",
+      "summary": "Explicit service requirements, host-requested mounting and occurrence-scoped cleanup.",
+      "authority": "Mounting contract; hosting decisions remain external.",
+      "owns": ["surface context contract", "mount result contract", "idempotent cleanup wrapper"],
+      "doesNotOwn": ["UI component", "host target", "borrowed services", "extension admission", "package acquisition"],
+      "workflow": ["Check required services", "Mount explicitly", "Dispose occurrence"],
+      "symbolNames": ["KonitifToolSurfaceContext", "KonitifToolSurfaceImplementation", "KonitifToolSurfaceInstance", "KonitifToolSurfaceMountResult", "mountKonitifToolSurface"]
+    },
+    {
       "id": "module-contract",
       "title": "Module contract",
       "summary": "Portable definition of a tool and its contributions.",

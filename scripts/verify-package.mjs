@@ -28,7 +28,7 @@ if (process.platform === 'win32') {
 const [packed] = JSON.parse(packOutput);
 const files = packed.files.map(file => file.path);
 for (const file of files) assert.match(file, /^(dist\/|src\/|reference\/|package\.json$|README\.md$|LICENSE\.md$)/);
-for (const file of ['dist/index.js', 'dist/index.d.ts', 'dist/input.js', 'dist/input.d.ts', 'src/index.ts', 'src/input.ts', 'LICENSE.md', 'reference/catalog.json', 'reference/diagrams.json']) assert.ok(files.includes(file), file);
+for (const file of ['dist/index.js', 'dist/index.d.ts', 'dist/surface.js', 'dist/surface.d.ts', 'dist/input.js', 'dist/input.d.ts', 'src/index.ts', 'src/input.ts', 'src/surface.ts', 'LICENSE.md', 'reference/catalog.json', 'reference/diagrams.json']) assert.ok(files.includes(file), file);
 const consumer = join(temp, 'consumer');
 const dependency = join(consumer, 'node_modules/@konitif/tools');
 mkdirSync(dependency, { recursive: true });
@@ -53,7 +53,7 @@ cpSync(join(root, 'tests/consumer.mts'), join(consumer, 'consumer.mts'));
 run(process.execPath, [join(root, 'node_modules/typescript/bin/tsc'), '--noEmit', '--strict', '--target', 'ES2022', '--module', 'NodeNext', '--moduleResolution', 'NodeNext', 'consumer.mts'], consumer);
 run(process.execPath, ['--input-type=module', '-e', `
   import assert from 'node:assert/strict';
-  import {defineKonitifToolModule, bindKonitifToolModule, KonitifToolModuleRegistry} from '@konitif/tools';
+  import {defineKonitifToolModule, bindKonitifToolModule, KonitifToolModuleRegistry, mountKonitifToolSurface} from '@konitif/tools';
   let calls = 0;
   const module = defineKonitifToolModule({id:'external',name:'External',capability:'inspect',definition:{ready:true}});
   const binding = bindKonitifToolModule({module,loadComponent:async()=>{calls++;return 'component';}});
@@ -61,6 +61,14 @@ run(process.execPath, ['--input-type=module', '-e', `
   assert.equal(calls,0); assert.equal(registry.get(module.id),module);
   assert.throws(()=>registry.register(module),/Duplicate/);
   assert.equal(await binding.loadComponent(),'component'); assert.equal(calls,1);
+  let cleanups = 0;
+  const surface = {requiredServices:['projection'],mount:()=>({dispose(){cleanups++;}})};
+  const refused = await mountKonitifToolSurface(surface,{target:1,state:{},services:{}});
+  assert.equal(refused.status,'refused');
+  const mounted = await mountKonitifToolSurface(surface,{target:1,state:{},services:{projection:{}}});
+  assert.equal(mounted.status,'mounted');
+  await Promise.all([mounted.instance.dispose(),mounted.instance.dispose()]);
+  assert.equal(cleanups,1);
   const {resolveInteractionInputActions}=await import('@konitif/tools/input');
   const signal={source:'keyboard',controlId:'Space',phase:'press'};
   assert.deepEqual(resolveInteractionInputActions([{id:'play',actionId:'play',source:'keyboard',controlId:'Space',phase:'press'}],signal),[{actionId:'play',bindingId:'play',signal}]);

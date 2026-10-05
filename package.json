@@ -1,7 +1,7 @@
 {
   "name": "@konitif/tools",
   "license": "PolyForm-Noncommercial-1.0.0",
-  "version": "0.284.6",
+  "version": "0.284.7",
   "private": false,
   "type": "module",
   "main": "./dist/index.js",
