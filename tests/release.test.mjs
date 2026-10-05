@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { assertReleaseInputs, assertPublishingTools } from '../scripts/check-release.mjs';
 const policy = { repository: 'LeMouf/konitif-tools', packageName: '@konitif/tools' };
 const manifest = { name: policy.packageName, version: '0.284.1', private: false, license: 'PolyForm-Noncommercial-1.0.0', publishConfig: {access:'public'}, repository: {url:'git+https://github.com/LeMouf/konitif-tools.git'} };
@@ -13,5 +14,14 @@ test('release template refuses foreign repo, branch, event and mismatched versio
 });
 test('publishing tools fail closed without auto-upgrading',()=>{
   assertPublishingTools('24.20.0','11.19.0');
+  assertPublishingTools('24.21.0','11.19.0');
   for(const pair of [['20.0.0','11.19.0'],['24.20.0','10.9.4'],['24.20.0','11.5.1-beta']]) assert.throws(()=>assertPublishingTools(...pair));
+});
+
+test('CI selects cached compatible runtimes without downloading replacements', () => {
+  const source = readFileSync(new URL('../scripts/select-ci-runtime.sh', import.meta.url), 'utf8');
+  assert.match(source, /node\/\*\/x64\/bin/);
+  assert.match(source, /\[22,14,0\]/);
+  assert.match(source, /\[11,5,1\]/);
+  assert.doesNotMatch(source, /curl|wget|npm install|setup-node/);
 });
